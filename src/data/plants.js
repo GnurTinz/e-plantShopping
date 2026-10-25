@@ -4,14 +4,14 @@ const plants = [
     id: "air-1",
     name: "Snake Plant",
     price: 25,
-    image: "https://images.unsplash.com/photo-1593482892290-f54927ae2b5b?auto=format&fit=crop&w=600&q=80",
+    image: "https://pixabay.com/photos/boston-fern-fern-house-plant-plant-5114414/",
     category: "Air Purifying Plants",
   },
   {
     id: "air-2",
     name: "Peace Lily",
     price: 22,
-    image: "https://images.unsplash.com/photo-1593691509543-c55fb32e5cee?auto=format&fit=crop&w=600&q=80",
+    image: "https://unsplash.com/photos/a-peace-lily-plant-with-green-leaves-and-white-flowers-wqZMzSu2Qtc?utm_source=chatgpt.com",
     category: "Air Purifying Plants",
   },
   {
@@ -39,7 +39,7 @@ const plants = [
     id: "air-6",
     name: "Boston Fern",
     price: 24,
-    image: "https://images.unsplash.com/photo-1597055181300-dc8c2f0f7c9e?auto=format&fit=crop&w=600&q=80",
+    image: "https://unsplash.com/photos/boston-fern-plant-wF_ubMuvDiw?utm_source=chatgpt.com",
     category: "Air Purifying Plants",
   },
 

@@ -1,0 +1,246 @@
+
+.plants-page {
+  min-height: 100vh;
+  background: #f7f9f5;
+  color: #243b2c;
+}
+
+.plants-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 6%;
+  background: #fff;
+  border-bottom: 1px solid #e4e9e1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.plants-brand {
+  border: none;
+  background: transparent;
+  color: #285c3b;
+  font-size: 1.3rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.plants-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.plants-nav-links button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #34483a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.plants-nav-links button:hover,
+.plants-nav-links button.active {
+  background: #e7f1e5;
+  color: #285c3b;
+}
+
+.plants-cart-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.plants-cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #285c3b;
+  color: white;
+  font-size: 0.8rem;
+}
+
+.plants-header {
+  padding: 48px 20px 36px;
+  text-align: center;
+  background: linear-gradient(135deg, #e6f0e1, #f7f9f5);
+}
+
+.plants-eyebrow {
+  margin: 0 0 10px;
+  color: #477653;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.plants-header h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.plants-header > p:last-child {
+  margin: 0 auto;
+  max-width: 600px;
+  color: #627064;
+  line-height: 1.7;
+}
+
+.plants-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 24px 64px;
+}
+
+.category-section {
+  margin-bottom: 48px;
+}
+
+.category-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #dce7d8;
+}
+
+.category-heading h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.category-heading span {
+  color: #6c7d6d;
+  font-size: 0.9rem;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.plant-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e5eae1;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 5px 18px rgba(31, 58, 36, 0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.plant-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(31, 58, 36, 0.12);
+}
+
+.plant-image-wrapper {
+  width: 100%;
+  height: 230px;
+  overflow: hidden;
+  background: #e8eee4;
+}
+
+.plant-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.plant-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 18px;
+}
+
+.plant-info h3 {
+  min-height: 48px;
+  margin: 0 0 10px;
+  color: #283d2d;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.plant-price {
+  margin: 0 0 18px;
+  color: #327347;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.add-button {
+  width: 100%;
+  margin-top: auto;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #327347;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-button:hover:not(:disabled) {
+  background: #245635;
+}
+
+.add-button:disabled {
+  background: #a4b5a5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 850px) {
+  .product-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .plant-image-wrapper {
+    height: 210px;
+  }
+}
+
+@media (max-width: 560px) {
+  .plants-navbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .plants-nav-links {
+    width: 100%;
+    justify-content: space-between;
+    gap: 4px;
+  }
+
+  .plants-nav-links button {
+    padding: 9px 8px;
+  }
+
+  .plants-container {
+    padding: 28px 16px 44px;
+  }
+
+  .product-list {
+    grid-template-columns: 1fr;
+  }
+
+  .plant-image-wrapper {
+    height: 250px;
+  }
+}
