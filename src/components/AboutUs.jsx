@@ -1,20 +1,25 @@
-
-export default function AboutUs({ setPage }) {
+function AboutUs({ setPage }) {
   return (
-    <section className="hero">
+    <section className="about-us-container background-image">
       <div className="hero-content">
-        <p className="eyebrow">BRING NATURE HOME</p>
+        <p className="eyebrow">WELCOME TO YOUR GREEN SPACE</p>
 
-        <h1>Find Your Little Piece of Paradise</h1>
+        <h1>Welcome to Paradise Nursery</h1>
 
-        <p className="hero-description">
-          Discover beautiful houseplants that bring life,
-          freshness, and happiness into your home.
-          Whether you are a beginner or a plant lover,
-          we have the perfect green companion for you.
+        <p>
+          Paradise Nursery is an online plant shop dedicated to bringing
+          the beauty of nature into your home. We offer a variety of
+          houseplants to help you create a greener and more relaxing space.
+        </p>
+
+        <p>
+          Our mission is to make plant shopping simple and enjoyable by
+          providing quality plants, helpful product information, and a
+          convenient shopping experience for plant lovers of all levels.
         </p>
 
         <button
+          type="button"
           className="primary-button"
           onClick={() => setPage("plants")}
         >
@@ -24,3 +29,5 @@ export default function AboutUs({ setPage }) {
     </section>
   );
 }
+
+export default AboutUs;

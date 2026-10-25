@@ -1,11 +1,10 @@
-
 import { useSelector } from "react-redux";
-import { ShoppingCart, Leaf } from "lucide-react";
+import { Leaf, ShoppingCart } from "lucide-react";
 
-export default function Navbar({ page, setPage }) {
-  const items = useSelector((state) => state.cart.items);
+function Navbar({ page, setPage }) {
+  const cartItems = useSelector((state) => state.cart.items);
 
-  const cartCount = items.reduce(
+  const totalQuantity = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
   );
@@ -13,37 +12,47 @@ export default function Navbar({ page, setPage }) {
   return (
     <header className="navbar">
       <button
+        type="button"
         className="brand"
         onClick={() => setPage("home")}
+        aria-label="Go to Home"
       >
-        <Leaf size={25} />
+        <Leaf size={24} />
         <span>Paradise Nursery</span>
       </button>
 
-      <nav className="nav-links">
+      <nav className="nav-links" aria-label="Main navigation">
         <button
-          className={page === "home" ? "active" : ""}
+          type="button"
+          className="nav-link"
+          aria-current={page === "home" ? "page" : undefined}
           onClick={() => setPage("home")}
         >
           Home
         </button>
 
         <button
-          className={page === "plants" ? "active" : ""}
+          type="button"
+          className="nav-link"
+          aria-current={page === "plants" ? "page" : undefined}
           onClick={() => setPage("plants")}
         >
           Plants
         </button>
 
         <button
-          className={`cart-link ${page === "cart" ? "active" : ""}`}
+          type="button"
+          className="nav-link"
+          aria-current={page === "cart" ? "page" : undefined}
           onClick={() => setPage("cart")}
         >
           <ShoppingCart size={20} />
-          Cart
-          <span className="cart-count">{cartCount}</span>
+          <span>Cart</span>
+          <span className="cart-count">{totalQuantity}</span>
         </button>
       </nav>
     </header>
   );
 }
+
+export default Navbar;

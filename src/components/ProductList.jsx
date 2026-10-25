@@ -1,60 +1,82 @@
-
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../features/cart/CartSlice";
-import { plants } from "../data/plants";
+import { addItem } from "../features/cart/CartSlice";
+import plants from "../data/plants";
 
-export default function ProductList() {
+function ProductList() {
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state) => state.cart.items);
 
-  const categories = [...new Set(
-    plants.map((plant) => plant.category)
-  )];
+  const addedToCart = {};
+
+  cartItems.forEach((item) => {
+    addedToCart[item.name] = true;
+  });
+
+  const plantsArray = Object.entries(
+    plants.reduce((groups, plant) => {
+      if (!groups[plant.category]) {
+        groups[plant.category] = [];
+      }
+
+      groups[plant.category].push(plant);
+      return groups;
+    }, {})
+  ).map(([category, plantsInCategory]) => ({
+    category,
+    plants: plantsInCategory,
+  }));
 
   return (
-    <section className="products-section">
-      <div className="section-heading">
-        <p className="eyebrow">OUR COLLECTION</p>
-        <h1>Find Your Perfect Plant</h1>
-        <p>Bring a little more green into your everyday life.</p>
-      </div>
+    <section className="page-container">
+      <h1 className="page-title">Our Houseplants</h1>
+      <p className="page-title">
+        Discover plants to bring more life into your space.
+      </p>
 
-      {categories.map((category) => (
-        <div className="category-section" key={category}>
-          <h2>{category}</h2>
+      {plantsArray.map((category) => (
+        <section
+          className="category-section"
+          key={category.category}
+        >
+          <h2 className="category-title">
+            {category.category}
+          </h2>
 
-          <div className="product-grid">
-            {plants
-              .filter((plant) => plant.category === category)
-              .map((plant) => {
-                const inCart = items.some(
-                  (item) => item.id === plant.id
-                );
+          <div className="product-list">
+            {category.plants.map((plant) => (
+              <article className="plant-card" key={plant.id}>
+                <img
+                  className="plant-image"
+                  src={plant.image}
+                  alt={plant.name}
+                  loading="lazy"
+                />
 
-                return (
-                  <article className="product-card" key={plant.id}>
-                    <img src={plant.image} alt={plant.name} />
+                <div className="plant-info">
+                  <h3>{plant.name}</h3>
 
-                    <div className="product-info">
-                      <h3>{plant.name}</h3>
-                      <p className="price">
-                        ${Number(plant.price).toFixed(2)}
-                      </p>
+                  <p className="plant-price">
+                    ${plant.price.toFixed(2)}
+                  </p>
 
-                      <button
-                        className="primary-button add-button"
-                        disabled={inCart}
-                        onClick={() => dispatch(addToCart(plant))}
-                      >
-                        {inCart ? "Added to Cart" : "Add to Cart"}
-                      </button>
-                    </div>
-                  </article>
-                );
-              })}
+                  <button
+                    type="button"
+                    className="add-button"
+                    disabled={Boolean(addedToCart[plant.name])}
+                    onClick={() => dispatch(addItem(plant))}
+                  >
+                    {addedToCart[plant.name]
+                      ? "Added to Cart"
+                      : "Add to Cart"}
+                  </button>
+                </div>
+              </article>
+            ))}
           </div>
-        </div>
+        </section>
       ))}
     </section>
   );
 }
+
+export default ProductList;

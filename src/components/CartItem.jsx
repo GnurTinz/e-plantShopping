@@ -1,117 +1,146 @@
-
 import { useDispatch, useSelector } from "react-redux";
 import {
-  increaseQuantity,
-  decreaseQuantity,
-  removeFromCart,
+  removeItem,
+  updateQuantity,
 } from "../features/cart/CartSlice";
 
-export default function CartItem({ setPage }) {
+function CartItem({ setPage }) {
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state) => state.cart.items);
 
-  const totalItems = items.reduce(
-    (sum, item) => sum + item.quantity,
+  const totalAmount = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
     0
   );
 
-  const totalPrice = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
-  if (items.length === 0) {
-    return (
-      <section className="cart-section empty-cart">
-        <h1>Your Shopping Cart</h1>
-        <p>Your cart is waiting for some greenery!</p>
-        <button
-          className="primary-button"
-          onClick={() => setPage("plants")}
-        >
-          Continue Shopping
-        </button>
-      </section>
+  const handleIncrement = (item) => {
+    dispatch(
+      updateQuantity({
+        id: item.id,
+        quantity: item.quantity + 1,
+      })
     );
-  }
+  };
+
+  const handleDecrement = (item) => {
+    dispatch(
+      updateQuantity({
+        id: item.id,
+        quantity: item.quantity - 1,
+      })
+    );
+  };
+
+  const handleDelete = (item) => {
+    dispatch(removeItem(item.id));
+  };
+
+  const handleCheckout = () => {
+    window.alert("Coming Soon!");
+  };
 
   return (
-    <section className="cart-section">
-      <h1>Your Shopping Cart</h1>
+    <section className="page-container cart-container">
+      <h1 className="page-title">Shopping Cart</h1>
 
-      <div className="cart-layout">
-        <div className="cart-items">
-          {items.map((item) => (
-            <article className="cart-row" key={item.id}>
-              <img src={item.image} alt={item.name} />
+      {cartItems.length === 0 ? (
+        <div className="empty-cart">
+          <h2>Your cart is empty</h2>
+          <p>Find a plant to bring some greenery into your home.</p>
 
-              <div className="cart-product-info">
+          <button
+            type="button"
+            className="primary-button"
+            onClick={() => setPage("plants")}
+          >
+            Continue Shopping
+          </button>
+        </div>
+      ) : (
+        <>
+          {cartItems.map((item) => (
+            <article className="cart-item" key={item.id}>
+              <img
+                className="cart-item-image"
+                src={item.image}
+                alt={item.name}
+              />
+
+              <div className="cart-item-info">
                 <h3>{item.name}</h3>
-                <p>${Number(item.price).toFixed(2)} each</p>
+
+                <p>Unit price: ${item.price.toFixed(2)}</p>
 
                 <div className="quantity-controls">
                   <button
-                    aria-label={`Decrease ${item.name}`}
-                    onClick={() =>
-                      dispatch(decreaseQuantity(item.id))
-                    }
+                    type="button"
+                    aria-label={`Decrease ${item.name} quantity`}
+                    onClick={() => handleDecrement(item)}
                   >
-                    −
+                    -
                   </button>
 
-                  <span>{item.quantity}</span>
+                  <span>Quantity: {item.quantity}</span>
 
                   <button
-                    aria-label={`Increase ${item.name}`}
-                    onClick={() =>
-                      dispatch(increaseQuantity(item.id))
-                    }
+                    type="button"
+                    aria-label={`Increase ${item.name} quantity`}
+                    onClick={() => handleIncrement(item)}
                   >
                     +
                   </button>
                 </div>
 
                 <button
-                  className="remove-button"
-                  onClick={() =>
-                    dispatch(removeFromCart(item.id))
-                  }
+                  type="button"
+                  className="delete-button"
+                  onClick={() => handleDelete(item)}
                 >
-                  Remove
+                  Delete
                 </button>
               </div>
 
-              <strong>
+              <div className="item-total">
                 ${(item.price * item.quantity).toFixed(2)}
-              </strong>
+              </div>
             </article>
           ))}
-        </div>
 
-        <aside className="cart-summary">
-          <h2>Order Summary</h2>
-          <p>Items: {totalItems}</p>
+          <div className="cart-summary">
+            <h2>
+              Total: ${totalAmount.toFixed(2)}
+            </h2>
 
-          <div className="summary-total">
-            <span>Total</span>
-            <strong>${totalPrice.toFixed(2)}</strong>
+            <p>
+              Total items:{" "}
+              {cartItems.reduce(
+                (sum, item) => sum + item.quantity,
+                0
+              )}
+            </p>
+
+            <div className="cart-actions">
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={() => setPage("plants")}
+              >
+                Continue Shopping
+              </button>
+
+              <button
+                type="button"
+                className="checkout-button"
+                onClick={handleCheckout}
+              >
+                Checkout
+              </button>
+            </div>
           </div>
-
-          <button
-            className="primary-button full-button"
-            onClick={() => window.alert("Coming Soon!")}
-          >
-            Checkout
-          </button>
-
-          <button
-            className="secondary-button full-button"
-            onClick={() => setPage("plants")}
-          >
-            Continue Shopping
-          </button>
-        </aside>
-      </div>
+        </>
+      )}
     </section>
   );
 }
+
+export default CartItem;
