@@ -1,0 +1,66 @@
+
+export const plants = [
+  {
+    id: 1,
+    name: "Monstera Deliciosa",
+    category: "Tropical Plants",
+    price: 25,
+    image: "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=500",
+  },
+  {
+    id: 2,
+    name: "Peace Lily",
+    category: "Tropical Plants",
+    price: 18,
+    image: "https://images.unsplash.com/photo-1593691509543-c55fb32e5cee?w=500",
+  },
+  {
+    id: 3,
+    name: "Bird of Paradise",
+    category: "Tropical Plants",
+    price: 35,
+    image: "https://images.unsplash.com/photo-1597055181300-e3633a917d3d?w=500",
+  },
+  {
+    id: 4,
+    name: "Snake Plant",
+    category: "Low Maintenance",
+    price: 20,
+    image: "https://images.unsplash.com/photo-1593482892290-f54927ae2b30?w=500",
+  },
+  {
+    id: 5,
+    name: "ZZ Plant",
+    category: "Low Maintenance",
+    price: 22,
+    image: "https://images.unsplash.com/photo-1632207691143-643e2b4b1f4b?w=500",
+  },
+  {
+    id: 6,
+    name: "Jade Plant",
+    category: "Low Maintenance",
+    price: 15,
+    image: "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=500",
+  },
+  {
+    id: 7,
+    name: "Golden Pothos",
+    category: "Hanging Plants",
+    price: 16,
+    image: "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?w=500",
+  },
+  {
+    id: 8,
+    name: "String of Pearls",
+    category: "Hanging Plants",
+    price: 19,
+    image: "https://images.unsplash.com/photo-1459156212016-c812468e2115?w=500",
+  },
+  {
+    id: 9,
+    name: "Heartleaf Philodendron",
+    category: "Hanging Plants",
+    price: 17,
+    image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=500",
+  },
+];
