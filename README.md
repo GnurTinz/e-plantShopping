@@ -4,7 +4,7 @@
 e-plantShopping
 
 ## Description
-e-plantShopping is a plant shopping web application built with React. It allows users to browse houseplants by category, view plant images and prices, add plants to a shopping cart, update item quantities, remove items, and view the total cost of their cart.
+Paradise Nursery is an online plant shopping application where users can browse plants by category, add plants to a shopping cart, update quantities, and view their cart total.
 
 ## Features
 - Browse plants organized into categories.

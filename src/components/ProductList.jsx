@@ -1,44 +1,47 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../features/cart/CartSlice";
-import plants from "../data/plants";
+import plantsArray from "../data/plants";
 import "./ProductList.css";
 
 function ProductList({ setPage }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
 
-  // Xác định những cây đã có trong giỏ.
-  const addedToCart = new Set(
-    cartItems.map((item) => item.id)
-  );
+  // Lưu tên các cây đã có trong giỏ hàng.
+  const addedToCart = {};
 
-  // Tính tổng số lượng sản phẩm trong giỏ.
+  cartItems.forEach((item) => {
+    addedToCart[item.name] = true;
+  });
+
+  // Tổng số lượng cây trong giỏ hàng.
   const totalItems = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
   );
 
-  // Gom cây theo danh mục.
-  const categories = Object.entries(
-    plants.reduce((groups, plant) => {
-      if (!groups[plant.category]) {
-        groups[plant.category] = [];
-      }
+  // Navigation handlers.
+  const handleNavigationHome = () => {
+    setPage("home");
+  };
 
-      groups[plant.category].push(plant);
-      return groups;
-    }, {})
-  );
+  const handleNavigationPlants = () => {
+    setPage("plants");
+  };
+
+  const handleNavigationCart = () => {
+    setPage("cart");
+  };
 
   return (
     <div className="plants-page">
       {/* Navbar */}
-      <nav className="plants-navbar">
+      <nav className="navbar">
         <button
           type="button"
           className="plants-brand"
-          onClick={() => setPage("home")}
+          onClick={handleNavigationHome}
         >
           Paradise Nursery
         </button>
@@ -46,7 +49,7 @@ function ProductList({ setPage }) {
         <div className="plants-nav-links">
           <button
             type="button"
-            onClick={() => setPage("home")}
+            onClick={handleNavigationHome}
           >
             Home
           </button>
@@ -54,7 +57,7 @@ function ProductList({ setPage }) {
           <button
             type="button"
             className="active"
-            onClick={() => setPage("plants")}
+            onClick={handleNavigationPlants}
           >
             Plants
           </button>
@@ -62,10 +65,13 @@ function ProductList({ setPage }) {
           <button
             type="button"
             className="plants-cart-link"
-            onClick={() => setPage("cart")}
+            onClick={handleNavigationCart}
           >
             🛒 Cart
-            <span className="plants-cart-count">
+            <span
+              id="cart_quantity_count"
+              className="cart_quantity_count"
+            >
               {totalItems}
             </span>
           </button>
@@ -74,8 +80,12 @@ function ProductList({ setPage }) {
 
       {/* Page heading */}
       <header className="plants-header">
-        <p className="plants-eyebrow">GROW YOUR GREEN SPACE</p>
+        <p className="plants-eyebrow">
+          GROW YOUR GREEN SPACE
+        </p>
+
         <h1>Our Houseplants</h1>
+
         <p>
           Discover beautiful plants to bring more life
           and freshness into your home.
@@ -84,19 +94,24 @@ function ProductList({ setPage }) {
 
       {/* Product categories */}
       <main className="plants-container">
-        {categories.map(([categoryName, categoryPlants]) => (
+        {plantsArray.map((categoryData) => (
           <section
             className="category-section"
-            key={categoryName}
+            key={categoryData.category}
           >
             <div className="category-heading">
-              <h2>{categoryName}</h2>
-              <span>{categoryPlants.length} plants</span>
+              <h2>{categoryData.category}</h2>
+
+              <span>
+                {categoryData.plants.length} plants
+              </span>
             </div>
 
             <div className="product-list">
-              {categoryPlants.map((plant) => {
-                const isAdded = addedToCart.has(plant.id);
+              {categoryData.plants.map((plant) => {
+                const isAdded = Boolean(
+                  addedToCart[plant.name]
+                );
 
                 return (
                   <article
@@ -127,7 +142,9 @@ function ProductList({ setPage }) {
                       <button
                         type="button"
                         className="add-button"
-                        disabled={isAdded}
+                        disabled={Boolean(
+                          addedToCart[plant.name]
+                        )}
                         onClick={() => dispatch(addItem(plant))}
                       >
                         {isAdded
